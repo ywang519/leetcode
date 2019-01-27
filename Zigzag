@@ -1,0 +1,19 @@
+class Solution {
+    public String convert(String s, int numRows) {
+		if (numRows == 1) return s;
+		
+		int n = s.length();
+		int dis = numRows*2-2;
+		
+		StringBuilder rec = new StringBuilder();
+		for(int i = 0; i < numRows; i++) {
+			for(int j = 0; j+i < n; j = j+dis) {
+				rec.append(s.charAt(i+j));
+				if (i != 0 && i != numRows-1 && j+dis-i < n) {
+					rec.append(s.charAt(j+dis-i));
+				}
+			}
+		}
+		return rec.toString();
+    }
+}
