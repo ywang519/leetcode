@@ -1,33 +1,57 @@
-public class myAtoiSolution {
-
-	public int myAtoi(String s) {
+class Solution {
+   	public int myAtoi(String s) {
 		int i = 1;
-		s.trim();
+		s = s.trim();
+		int ans;
+
 		if (s.length() == 0)
 			return 0;
-
+			
 		StringBuilder rec = new StringBuilder();
-		if (s.substring(0, 1).matches("\\d") || s.charAt(0) == '+' || s.charAt(0) == '-') {
+		if (s.substring(0, 1).matches("\\d+") || s.charAt(0) == '+' || s.charAt(0) == '-') {
 			if (s.charAt(0) == '+') {
-				while (i <= s.length() && s.substring(1, i + 1).matches("\\d")) {
-					rec.append(s.charAt(i));
+				i = i+1;
+				while (i <= s.length() && s.substring(1, i).matches("\\d+")) {
+					rec.append(s.charAt(i-1));
 					i = i + 1;
+				}
+				if (rec.length() == 0) {
+					return 0;
+				}
+				try {
+					ans = Integer.valueOf(rec.toString());
+				} catch (NumberFormatException e) {
+					ans = Integer.MAX_VALUE;
 				}
 			} else if (s.charAt(0) == '-') {
-				while (i <= s.length() && s.substring(1, i + 1).matches("\\d")) {
-					rec.append(s.charAt(i));
+				i = i+1;
+				while (i <= s.length() && s.substring(1, i).matches("\\d+")) {
+					rec.append(s.charAt(i-1));
 					i = i + 1;
 				}
+				if (rec.length() == 0) {
+					return 0;
+				}
+				try {
+					ans = Integer.valueOf(rec.toString());
+					ans = -ans;
+				} catch (NumberFormatException e) {
+					ans = Integer.MIN_VALUE;
+				}
 			} else {
-				while (i <= s.length() && s.substring(0, i).matches("\\d")) {
+				while (i <= s.length() && s.substring(0, i).matches("\\d+")) {
 					rec.append(s.charAt(i - 1));
 					i = i + 1;
 				}
+				try {
+					ans = Integer.valueOf(rec.toString());
+				} catch (NumberFormatException e) {
+					ans = Integer.MAX_VALUE;
+				}
 			}
+			return ans;
 		} else {
 			return 0;
 		}
-		return 0;
 	}
-
 }
